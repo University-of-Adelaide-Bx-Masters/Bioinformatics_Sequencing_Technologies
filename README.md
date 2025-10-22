@@ -1,2 +1,3 @@
-# Bioinformatics_Sequencing_Technologies
-Bioinformatics: Sequencing Technologies Course 
+# Bioinformatics: Sequencing Technologies
+
+Delivered in Semester 2.
