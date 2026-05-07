@@ -14,14 +14,14 @@ format:
     sansfont: Times New Roman
     slide-number: c
     show-slide-number: all
-    include-after-body: assets/uoa_bodl_logos.html
+    include-after-body: assets/logos.html
   html: 
     css: [assets/custom.scss]
     output-file: high_res_technologies.html
     embed-resources: false    
     toc: true
     toc-depth: 2
-    include-in-header: assets/uoa_bodl_logos.html
+    include-in-header: assets/logos.html
   beamer-pdf:
     output-file: high_res_technologies.pdf
     theme: Pittsburgh
@@ -54,13 +54,14 @@ I pay my respects to the cultural authority of Aboriginal and Torres Strait Isla
 
 - Microarray and early RNA-Seq analysis used 'bulk' tissues
 - Very hard to obtain pure cell-types in most samples 
-    + T cells sorted by FACS still hetergeneous
-    + Cancer biopsises are heterogeneous
+    + T cells sorted by FACS still heterogeneous
+    + Cancer biopsies are heterogeneous
     + Immortalised cell-lines (HeLa, HEK293 etc.) differentiate into multiple cell types
     
 ::: {.incremental}
 
-- Single-Cell RNA-Seq (scRNA-Seq) $\implies$ Identify cell-types within a sample
+- Single-Cell RNA-Seq (scRNA-Seq) $\implies$ RNA can be associated with "cell of origin"
+    + Identify cell-types within a sample
 - Spatial Transcriptomics $\implies$ Identify cell-types on a slide by location
     + Doesn't always utilise sequencing
 
@@ -72,11 +73,13 @@ I pay my respects to the cultural authority of Aboriginal and Torres Strait Isla
 
 ::: {.incremental}
 - Is differential expression large in a subset of cells?
+    + Which cells are they?
     + Or small in all cells?
+- Difference between cell-types and cell-state
 - How do cells travel through differentiation trajectories?
-- Which cells are communicating with which other cells?
 - Which cells are co-localised within tissue samples?
     + And where are the transcripts within a cell?
+- Which cells are communicating with which other cells?
 
 :::
 
@@ -96,10 +99,38 @@ I pay my respects to the cultural authority of Aboriginal and Torres Strait Isla
 
 ```{r scrna-timeline, fig.cap = "Figure from @Svensson2018-rs", fig.align='left', out.width='90%'}
 #| echo: false
-knitr::include_graphics(here::here("assets/scRNATimeline.jpg"))
+knitr::include_graphics(here::here("lectures/assets/scRNATimeline.jpg"))
 ```
 
-## Droplet-Based scRNA
+## Single Cell RNA-Seq {.slide-only .unlisted}
+
+Four basic scRNA technologies
+
+1. Droplet-based (e.g. 10x Genomics, Drop-Seq):
+    + Cells captured in micro-droplets $\rightarrow$ barcoded $\rightarrow$ lysed
+2. Plate-based (e.g. SMART-Seq2)
+    + Individual cells captured in *microwells* 
+3. Gel/Emulsification-based
+    + Similar to droplet but performed in solution
+4. Pooling & Splitting (e.g. SPLIT-Seq)
+    + Multiple wells with distinct barcodes
+    + Cells pooled $\rightarrow$ split $\rightarrow$ next barcode
+    
+## Single Cell RNA-Seq {.slide-only .unlisted}
+
+| **Protocol** | **C1 (SMART-Seq)** | **SMART-Seq2** | **10X Chromium** | **SPLIT-Seq** |
+|:-------- |:-------------- |:---------- |:------------ |:--------- |
+| *Platform* |  Microfluidics | Plate-based   | Droplet | Plate-based |
+| *Transcript* | Full-length  | Full-length   | 3’-end  | 3’-end |
+| *Cells* | 10^2^ − 10^3^     | 10^2^ − 10^3^ | 10^3^ − 10^4^ | 10^3^ − 10^5^ |
+| *Reads/Cell* | 10^6^        | 10^6^         | 10^4^ − 10^5^ | 10^4^         |
+
+Table: Data sourced from @Haque2017-ae
+
+<br>
+Tradeoff is between *cell numbers*, *transcripts per cell*, *full length vs 3'*, *cost* etc
+
+## Droplet-Based scRNA 
 
 ::: {.notes}
 - Have already dissociated cells
@@ -107,7 +138,7 @@ knitr::include_graphics(here::here("assets/scRNATimeline.jpg"))
 
 ```{r droplet, fig.align='left', out.width='100%'}
 #| echo: false
-knitr::include_graphics(here::here("assets/chromium-partitioning-library-prep.png"))
+knitr::include_graphics(here::here("lectures/assets/chromium-partitioning-library-prep.png"))
 ```
 
 ::: {.fragment}
@@ -152,24 +183,24 @@ knitr::include_graphics(here::here("assets/chromium-partitioning-library-prep.pn
 :::: 
 :::
 
-## SPLIT-Seq
+<!-- ## SPLIT-Seq -->
 
-:::: {.columns}
-::: {.column}
-![Taken from @Rosenberg2018-wl](assets/SPLIT_seq.png){width='60%'}
-:::
+<!-- :::: {.columns} -->
+<!-- ::: {.column} -->
+<!-- ![Taken from @Rosenberg2018-wl](assets/SPLIT_seq.png){width='60%'} -->
+<!-- ::: -->
 
-::: {.column}
+<!-- ::: {.column} -->
 
-SPLIT-Seq is an alternative, plate based scRNA method
+<!-- SPLIT-Seq is an alternative, plate based scRNA method -->
 
-- Cells are split into pools and fixed
-- One barcode/pool
-- Multiple rounds of pooling and barcoding
-- All amplification is *in situ*
+<!-- - Cells are split into pools and fixed -->
+<!-- - One barcode/pool -->
+<!-- - Multiple rounds of pooling and barcoding -->
+<!-- - All amplification is *in situ* -->
 
-:::
-::::
+<!-- ::: -->
+<!-- :::: -->
 
 
 <!-- ## CITE-Seq -->
@@ -181,16 +212,6 @@ SPLIT-Seq is an alternative, plate based scRNA method
 <!-- - Oligos are amplified along with RNA after cell lysis -->
 
 
-## Comparison of Select Technologies
-
-| **Protocol** | **C1 (SMART-Seq)** | **SMART-Seq2** | **10X Chromium** | **SPLIT-Seq** |
-|:-------- |:-------------- |:---------- |:------------ |:--------- |
-| *Platform* |  Microfluidics | Plate-based   | Droplet | Plate-based |
-| *Transcript* | Full-length  | Full-length   | 3’-end  | 3’-end |
-| *Cells* | 10^2^ − 10^3^     | 10^2^ − 10^3^ | 10^3^ − 10^4^ | 10^3^ − 10^5^ |
-| *Reads/Cell* | 10^6^        | 10^6^         | 10^4^ − 10^5^ | 10^4^         |
-
-Table: Data sourced from @Haque2017-ae
 
 
 ## Data Processing
@@ -203,13 +224,14 @@ Table: Data sourced from @Haque2017-ae
     + A feature is commonly thought of as a gene in scRNA-Seq
 - Similar to counts from bulk RNA-Seq but with many more columns (cells)
     + Also many more zero counts for genes
+    + Multiple cells from multiple biological replicates
 
 ## Filtering Stages
 
 - The aim is to keep the *high quality cells* and discard the dubious cells, such as:
     1. Low/High read numbers (library sizes)
     2. Low feature/gene numbers
-    3. High proportions of mitochondrial RNA =⇒ cells broken prior to lysis
+    3. High proportions of mitochondrial RNA $\implies$ cells broken prior to lysis
     4. Doublets (i.e. two cells instead of a single cell)
 
 ::: {.fragment}
@@ -224,7 +246,7 @@ Table: Data sourced from @Haque2017-ae
 
 ```{r variability, fig.cap = "Image from @Cuevas-Diaz-Duran2024-zc", fig.align='left', out.width='60%'}
 #| echo: false
-knitr::include_graphics(here::here("assets/12864_2024_10364_Fig2_HTML.png"))
+knitr::include_graphics(here::here("lectures/assets/12864_2024_10364_Fig2_HTML.png"))
 ```
 
 ::: {.fragment}
@@ -418,7 +440,7 @@ knitr::include_graphics(here::here("assets/12864_2024_10364_Fig2_HTML.png"))
 ## Beyond Sequencing
 
 - Barcoded probes via Fluorescence In Situ Hybridisation enable a sequencing-free perspective
-- Staining technologies used to identify cell boundaries, nucelei etc
+- Staining technologies used to identify cell boundaries, nuclei etc
 - MERFISH: multiplexed error-robust FISH [@Chen2015-qa]
     + Sequence specific barcodes able to detect ~10,000 transcripts
     + Directly count specific transcripts 
@@ -438,7 +460,7 @@ knitr::include_graphics(here::here("assets/12864_2024_10364_Fig2_HTML.png"))
 
 ```{r xenium, fig.cap = "Taken from https://xenium.10xgenomics.com. Highlighting CD4 in human kidney", out.width='80%', fig.align='left'}
 #| echo: false
-knitr::include_graphics(here::here("assets/xenium_cd4.png"))
+knitr::include_graphics(here::here("lectures/assets/xenium_cd4.png"))
 ```
 
 ## Examples of 10X Xenium Spatial Transcriptomics {.slide-only .unlisted}

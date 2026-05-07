@@ -14,14 +14,14 @@ format:
     sansfont: Times New Roman
     slide-number: c
     show-slide-number: all
-    include-after-body: assets/uoa_bodl_logos.html
+    include-after-body: assets/logos.html
   html: 
     css: [assets/custom.scss]
     output-file: transcriptome_assembly.html
     embed-resources: true    
     toc: true
     toc-depth: 2
-    include-in-header: assets/uoa_bodl_logos.html
+    include-in-header: assets/logos.html
   beamer-pdf:
     output-file: transcriptome_assembly.pdf
     theme: Pittsburgh
@@ -139,11 +139,28 @@ StringTie is the quick & dirty method. Will also turn up some weird artefacts
 - Reads broken into shorter *k*-mers
 - Adjacent *k*-mers $\rightarrow$ graph
 - Wise choice of *k* helps extend graph well beyond read length
+- Different *k* $\implies$ different assembly
 - Well-represented paths through graph $\rightarrow$ transcripts
 :::
 
 ::::
 
+## A Trinity Assembled Transcriptome
+
+- Assembly returns a Fasta file with all assembled transcripts
+
+```
+ >TRINITY_DN1000_c115_g5_i1 len=247 path=[31015:0-148 23018:149-246]
+ AATCTTTTTTGGTATTGGCAGTACTGTGCTCTGGGTAGTGATTAGGGCAAAAGAAGACAC
+ ACAATAAAGAACCAGGTGTTAGACGTCAGCAAGTCAAGGCCTTGGTTCTCAGCAGACAGA
+ AGACAGCCCTTCTCAATCCTCATCCCTTCCCTGAACAGACATGTCTTCTGCAAGCTTCTC
+ CAAGTCAGTTGTTCACAGGAACATCATCAGAATAAATTTGAAATTATGATTAGTATCTGA
+ TAAAGCA
+```
+
+- Read cluster `TRINITY_DN1000_c115`; Gene `g5`; Isoform `i1`
+- Pathway through graph is output
+- If diploid organism $\rightarrow$ both maternal & paternal transcripts
 
 ## Assessing Assembly Quality
 
@@ -171,7 +188,9 @@ StringTie is the quick & dirty method. Will also turn up some weird artefacts
     + Illumina reads $\leq$ 2x150nt
 - Long Reads are becoming dominant for assemblies
     + Sequence (near-)complete transcripts
-- Transposon expression in relevant cell types
+- Capture "difficult" transcripts:
+    + Transposable Elements (TEs)
+    + *DUX4* within repeat array with 11-150 repeats
 - Quantification approaching short-read consistency
     + Overcomes fragmentation bias in short-read technology [@Chen2025-sh]
     
@@ -180,7 +199,7 @@ StringTie is the quick & dirty method. Will also turn up some weird artefacts
 
 ```{r ont-isoforms, fig.align='left', out.width='60%', fig.cap = "Image from @Gleeson2021-nc. Isoforms observed in SH-5Y5Y cells" }
 #| echo: false
-knitr::include_graphics(here::here("assets/gkab1129fig5c.jpg"))
+knitr::include_graphics(here::here("lectures/assets/gkab1129fig5c.jpg"))
 ```
 
 
@@ -195,8 +214,11 @@ knitr::include_graphics(here::here("assets/gkab1129fig5c.jpg"))
 
 ::: {.column width='37%'}
 - From 50 bp to >4 Mb
-- Can sequence RNA or cDNA (pre/post-PCR)
-- More error prone
+- Can directly sequence RNA
+    + No PCR bias
+    + RNA-modifications
+- Also cDNA sequencing
+- Errors corrected using deep learning
 
 :::
 ::::
@@ -213,7 +235,7 @@ knitr::include_graphics(here::here("assets/gkab1129fig5c.jpg"))
 - PacBio IsoSeq:
     + Up to 25kb
     + Sequence cDNA only
-    + Highly accurate reads
+    + Circularisation $\implies$ Highly accurate reads
     
 :::
 ::::

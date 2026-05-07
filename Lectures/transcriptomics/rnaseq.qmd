@@ -14,14 +14,14 @@ format:
     sansfont: Times New Roman
     slide-number: c
     show-slide-number: all
-    include-after-body: assets/uoa_bodl_logos.html
+    include-after-body: assets/logos.html
   html: 
     css: [assets/custom.scss]
     output-file: rnaseq.html
     embed-resources: true    
     toc: true
     toc-depth: 2
-    include-in-header: assets/uoa_bodl_logos.html
+    include-in-header: assets/logos.html
   beamer-pdf:
     output-file: rnaseq.pdf
     theme: Pittsburgh
@@ -58,7 +58,7 @@ According to @Wang2009-hf
 reveal the **presence** and **quantity** of RNA in a biological sample at a **given moment**, analyzing the continuously changing cellular transcriptome.
 
 
-## RNA Sequencing {.slide-only .unlisted}
+## RNA Sequencing Vs Microarrays {.slide-only .unlisted}
 
 :::: {.columns}
 
@@ -88,7 +88,7 @@ reveal the **presence** and **quantity** of RNA in a biological sample at a **gi
 #| fig-height: 6
 library(tidyverse)
 theme_set(theme_bw())
-here::here("assets") %>% 
+here::here("lectures/assets") %>% 
   fs::dir_ls(glob = "*search.csv") %>% 
   lapply(read_csv) %>% 
   bind_rows(.id = "platform") %>% 
@@ -130,26 +130,29 @@ here::here("assets") %>%
 :::
 ::::
 
-## RNA Sequencing {.slide-only .unlisted}
+## RNA Sequencing Vs Microarrays {.slide-only .unlisted}
 
 - Microarrays rely on probes for transcripts defined *at design time*
 - Restricted in the number of transcripts/genes targeted
     + Arrays are confined for space
     + Gencode 48 (GRCh38): 78,686 genes + 385,669 transcripts
 - Probes capture non-specific binding
-- Measuring a labelled cDNA: fluourescence $\propto$ RNA abundace
+- Measuring a labelled cDNA: 
+    + Fluorescence $\propto$ RNA abundance
+    + No sequence information
 
     
 ::: {.fragment}
 [These limitations do not exist for RNA-Seq]{.text-red}
 :::
 
-## RNA Sequencing {.slide-only .unlisted}
+## RNA Sequencing Vs Microarrays {.slide-only .unlisted}
 
-- Directly sequence the biological material
+- Directly sequence the biological material (via cDNA)
 - Map to most recent reference at any point in time
 - Assemble a transcriptome (tissue specific)
 - Detect InDels / SNPs in expressed sequences 
+- Detect any allelic bias
 
 ::: {.fragment} 
 
@@ -199,7 +202,7 @@ here::here("assets") %>%
 
 ```{r, fig.cap = "Image from https://www.lexogen.com/polya-rna-selection-kit/", out.width='80%'}
 #| echo: false
-knitr::include_graphics(here::here("assets/03polya_workflow1.jpg"))
+knitr::include_graphics(here::here("lectures/assets/03polya_workflow1.jpg"))
 ```
 
 
@@ -212,7 +215,7 @@ knitr::include_graphics(here::here("assets/03polya_workflow1.jpg"))
 
 ```{r, fig.cap = "Image from https://support.illumina.com.cn", out.width='70%'}
 #| echo: false
-knitr::include_graphics(here::here("assets/Ribo_Zero_1.jpg"))
+knitr::include_graphics(here::here("lectures/assets/Ribo_Zero_1.jpg"))
 ```
 
 
@@ -238,7 +241,7 @@ knitr::include_graphics(here::here("assets/Ribo_Zero_1.jpg"))
 
 ```{r, fig.cap = "Image courtesy of https://sg.idtdna.com", out.width='95%'}
 #| echo: false
-knitr::include_graphics(here::here("assets/xgen-udi-umi-adapter-workflow.png"))
+knitr::include_graphics(here::here("lectures/assets/xgen-udi-umi-adapter-workflow.png"))
 ```
 
 ## Sequencing
@@ -261,7 +264,7 @@ knitr::include_graphics(here::here("assets/xgen-udi-umi-adapter-workflow.png"))
 
 - Sequencing data arrives as FastQ files
     + Standard QC (`FastQC`/`fastp`)
-    + Optional Adapter Removal
+    + Optional Adapter Removal, discarding short & low quality reads etc
 - Alignment to a reference genome needs to be splice aware
     + Usually indexed using a set of gene annotations
     + Indexes are dependent on both genome version + annotation version
@@ -287,7 +290,8 @@ knitr::include_graphics(here::here("assets/xgen-udi-umi-adapter-workflow.png"))
     + Always use the same GTF used when indexing the genome
 - Easy in theory but biology is often inconvenient
     + Most alignments will neatly be within exons or across splice junctions
-    + Some are not
+    + Some are not...
+    + Some reads align to multiple loci, i.e. multi-mapping
 
 ## Gene Quantitation {.slide-only .unlisted}
 
@@ -297,7 +301,7 @@ knitr::include_graphics(here::here("assets/xgen-udi-umi-adapter-workflow.png"))
 
 ```{r count-modes, fig.cap = "Image taken from https://htseq.readthedocs.io/en/latest/htseqcount.html", out.width='90%'}
 #| echo: false
-knitr::include_graphics(here::here("assets/count_modes.png"))
+knitr::include_graphics(here::here("lectures/assets/count_modes.png"))
 ```
 
 :::
@@ -372,7 +376,7 @@ How do we count:
     + With overdispersed variance
 
 $$
-\text{var}(y_{gi}) = \sigma^2_g\left(\mu_{gi} +\phi\mu^2_{gi})\right), \text{where } \phi > 0
+\text{var}(y_{gi}) = \sigma^2_g\left(\mu_{gi} +\phi\mu^2_{gi}\right), \text{where } \phi > 0
 $$
 
 ::: {.fragment}
@@ -516,7 +520,7 @@ $$
 
 ::: {.content-visible when-format="beamer"}
 \begingroup
-\scriptsize
+\tiny
 :::
 
 <!-- This is where the bibliography gets injected -->

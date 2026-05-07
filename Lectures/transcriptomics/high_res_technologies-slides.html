@@ -181,13 +181,16 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <li>Microarray and early RNA-Seq analysis used ‘bulk’ tissues</li>
 <li>Very hard to obtain pure cell-types in most samples
 <ul>
-<li>T cells sorted by FACS still hetergeneous</li>
-<li>Cancer biopsises are heterogeneous</li>
+<li>T cells sorted by FACS still heterogeneous</li>
+<li>Cancer biopsies are heterogeneous</li>
 <li>Immortalised cell-lines (HeLa, HEK293 etc.) differentiate into multiple cell types</li>
 </ul></li>
 </ul>
 <ul>
-<li class="fragment">Single-Cell RNA-Seq (scRNA-Seq) <span class="math inline">\(\implies\)</span> Identify cell-types within a sample</li>
+<li class="fragment">Single-Cell RNA-Seq (scRNA-Seq) <span class="math inline">\(\implies\)</span> RNA can be associated with “cell of origin”
+<ul>
+<li class="fragment">Identify cell-types within a sample</li>
+</ul></li>
 <li class="fragment">Spatial Transcriptomics <span class="math inline">\(\implies\)</span> Identify cell-types on a slide by location
 <ul>
 <li class="fragment">Doesn’t always utilise sequencing</li>
@@ -202,14 +205,16 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <ul>
 <li class="fragment">Is differential expression large in a subset of cells?
 <ul>
+<li class="fragment">Which cells are they?</li>
 <li class="fragment">Or small in all cells?</li>
 </ul></li>
+<li class="fragment">Difference between cell-types and cell-state</li>
 <li class="fragment">How do cells travel through differentiation trajectories?</li>
-<li class="fragment">Which cells are communicating with which other cells?</li>
 <li class="fragment">Which cells are co-localised within tissue samples?
 <ul>
 <li class="fragment">And where are the transcripts within a cell?</li>
 </ul></li>
+<li class="fragment">Which cells are communicating with which other cells?</li>
 </ul>
 </section></section>
 <section>
@@ -245,6 +250,82 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
       }</style></aside>
 
 <img data-src="assets/scRNATimeline.jpg" style="width:90.0%" class="r-stretch quarto-figure-left"><p class="caption">Figure from <span class="citation" data-cites="Svensson2018-rs">Svensson, Vento-Tormo, and Teichmann (<a href="#/section" role="doc-biblioref" onclick="">2018</a>)</span></p></section>
+<section id="single-cell-rna-seq-2" class="slide level2 slide-only unlisted">
+<h2>Single Cell RNA-Seq</h2>
+<p>Four basic scRNA technologies</p>
+<ol type="1">
+<li>Droplet-based (e.g.&nbsp;10x Genomics, Drop-Seq):
+<ul>
+<li>Cells captured in micro-droplets <span class="math inline">\(\rightarrow\)</span> barcoded <span class="math inline">\(\rightarrow\)</span> lysed</li>
+</ul></li>
+<li>Plate-based (e.g.&nbsp;SMART-Seq2)
+<ul>
+<li>Individual cells captured in <em>microwells</em></li>
+</ul></li>
+<li>Gel/Emulsification-based
+<ul>
+<li>Similar to droplet but performed in solution</li>
+</ul></li>
+<li>Pooling &amp; Splitting (e.g.&nbsp;SPLIT-Seq)
+<ul>
+<li>Multiple wells with distinct barcodes</li>
+<li>Cells pooled <span class="math inline">\(\rightarrow\)</span> split <span class="math inline">\(\rightarrow\)</span> next barcode</li>
+</ul></li>
+</ol>
+</section>
+<section id="single-cell-rna-seq-3" class="slide level2 slide-only unlisted">
+<h2>Single Cell RNA-Seq</h2>
+<table class="caption-top">
+<caption>Data sourced from <span class="citation" data-cites="Haque2017-ae">Haque et al. (<a href="#/section" role="doc-biblioref" onclick="">2017</a>)</span></caption>
+<colgroup>
+<col style="width: 15%">
+<col style="width: 25%">
+<col style="width: 18%">
+<col style="width: 22%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Protocol</strong></th>
+<th style="text-align: left;"><strong>C1 (SMART-Seq)</strong></th>
+<th style="text-align: left;"><strong>SMART-Seq2</strong></th>
+<th style="text-align: left;"><strong>10X Chromium</strong></th>
+<th style="text-align: left;"><strong>SPLIT-Seq</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><em>Platform</em></td>
+<td style="text-align: left;">Microfluidics</td>
+<td style="text-align: left;">Plate-based</td>
+<td style="text-align: left;">Droplet</td>
+<td style="text-align: left;">Plate-based</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><em>Transcript</em></td>
+<td style="text-align: left;">Full-length</td>
+<td style="text-align: left;">Full-length</td>
+<td style="text-align: left;">3’-end</td>
+<td style="text-align: left;">3’-end</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><em>Cells</em></td>
+<td style="text-align: left;">10<sup>2</sup> − 10<sup>3</sup></td>
+<td style="text-align: left;">10<sup>2</sup> − 10<sup>3</sup></td>
+<td style="text-align: left;">10<sup>3</sup> − 10<sup>4</sup></td>
+<td style="text-align: left;">10<sup>3</sup> − 10<sup>5</sup></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><em>Reads/Cell</em></td>
+<td style="text-align: left;">10<sup>6</sup></td>
+<td style="text-align: left;">10<sup>6</sup></td>
+<td style="text-align: left;">10<sup>4</sup> − 10<sup>5</sup></td>
+<td style="text-align: left;">10<sup>4</sup></td>
+</tr>
+</tbody>
+</table>
+<p><br> Tradeoff is between <em>cell numbers</em>, <em>transcripts per cell</em>, <em>full length vs 3’</em>, <em>cost</em> etc</p>
+</section>
 <section id="droplet-based-scrna" class="slide level2">
 <h2>Droplet-Based scRNA</h2>
 <aside class="notes">
@@ -307,84 +388,25 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 </ul>
 </div></div>
 </div>
-</section>
-<section id="split-seq" class="slide level2">
-<h2>SPLIT-Seq</h2>
-<div class="columns">
-<div class="column">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="assets/SPLIT_seq.png" style="width:60.0%"></p>
-<figcaption>Taken from <span class="citation" data-cites="Rosenberg2018-wl">Rosenberg et al. (<a href="#/section" role="doc-biblioref" onclick="">2018</a>)</span></figcaption>
-</figure>
-</div>
-</div><div class="column">
-<p>SPLIT-Seq is an alternative, plate based scRNA method</p>
-<ul>
-<li>Cells are split into pools and fixed</li>
-<li>One barcode/pool</li>
-<li>Multiple rounds of pooling and barcoding</li>
-<li>All amplification is <em>in situ</em></li>
-</ul>
-</div></div>
+<!-- ## SPLIT-Seq -->
+<!-- :::: {.columns} -->
+<!-- ::: {.column} -->
+<!-- ![Taken from @Rosenberg2018-wl](assets/SPLIT_seq.png){width='60%'} -->
+<!-- ::: -->
+<!-- ::: {.column} -->
+<!-- SPLIT-Seq is an alternative, plate based scRNA method -->
+<!-- - Cells are split into pools and fixed -->
+<!-- - One barcode/pool -->
+<!-- - Multiple rounds of pooling and barcoding -->
+<!-- - All amplification is *in situ* -->
+<!-- ::: -->
+<!-- :::: -->
 <!-- ## CITE-Seq -->
 <!-- - Cellular Indexing of Transcriptomes and Epitopes by sequencing (CITE-Seq) [@Stoeckius2017-od] -->
 <!--     + Designed for Droplet-based methods -->
 <!-- - Extends scRNA using labelled antibodies for cell-surface proteins -->
 <!-- - Antibodies labelled with oligo tags -->
 <!-- - Oligos are amplified along with RNA after cell lysis -->
-</section>
-<section id="comparison-of-select-technologies" class="slide level2">
-<h2>Comparison of Select Technologies</h2>
-<table class="caption-top">
-<caption>Data sourced from <span class="citation" data-cites="Haque2017-ae">Haque et al. (<a href="#/section" role="doc-biblioref" onclick="">2017</a>)</span></caption>
-<colgroup>
-<col style="width: 15%">
-<col style="width: 25%">
-<col style="width: 18%">
-<col style="width: 22%">
-<col style="width: 17%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;"><strong>Protocol</strong></th>
-<th style="text-align: left;"><strong>C1 (SMART-Seq)</strong></th>
-<th style="text-align: left;"><strong>SMART-Seq2</strong></th>
-<th style="text-align: left;"><strong>10X Chromium</strong></th>
-<th style="text-align: left;"><strong>SPLIT-Seq</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><em>Platform</em></td>
-<td style="text-align: left;">Microfluidics</td>
-<td style="text-align: left;">Plate-based</td>
-<td style="text-align: left;">Droplet</td>
-<td style="text-align: left;">Plate-based</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><em>Transcript</em></td>
-<td style="text-align: left;">Full-length</td>
-<td style="text-align: left;">Full-length</td>
-<td style="text-align: left;">3’-end</td>
-<td style="text-align: left;">3’-end</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><em>Cells</em></td>
-<td style="text-align: left;">10<sup>2</sup> − 10<sup>3</sup></td>
-<td style="text-align: left;">10<sup>2</sup> − 10<sup>3</sup></td>
-<td style="text-align: left;">10<sup>3</sup> − 10<sup>4</sup></td>
-<td style="text-align: left;">10<sup>3</sup> − 10<sup>5</sup></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><em>Reads/Cell</em></td>
-<td style="text-align: left;">10<sup>6</sup></td>
-<td style="text-align: left;">10<sup>6</sup></td>
-<td style="text-align: left;">10<sup>4</sup> − 10<sup>5</sup></td>
-<td style="text-align: left;">10<sup>4</sup></td>
-</tr>
-</tbody>
-</table>
 </section>
 <section id="data-processing" class="slide level2">
 <h2>Data Processing</h2>
@@ -402,6 +424,7 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <li>Similar to counts from bulk RNA-Seq but with many more columns (cells)
 <ul>
 <li>Also many more zero counts for genes</li>
+<li>Multiple cells from multiple biological replicates</li>
 </ul></li>
 </ul>
 </section>
@@ -412,7 +435,7 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <ol type="1">
 <li>Low/High read numbers (library sizes)</li>
 <li>Low feature/gene numbers</li>
-<li>High proportions of mitochondrial RNA =⇒ cells broken prior to lysis</li>
+<li>High proportions of mitochondrial RNA <span class="math inline">\(\implies\)</span> cells broken prior to lysis</li>
 <li>Doublets (i.e.&nbsp;two cells instead of a single cell)</li>
 </ol></li>
 </ul>
@@ -629,7 +652,7 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <h2>Beyond Sequencing</h2>
 <ul>
 <li>Barcoded probes via Fluorescence In Situ Hybridisation enable a sequencing-free perspective</li>
-<li>Staining technologies used to identify cell boundaries, nucelei etc</li>
+<li>Staining technologies used to identify cell boundaries, nuclei etc</li>
 <li>MERFISH: multiplexed error-robust FISH <span class="citation" data-cites="Chen2015-qa">(<a href="#/section" role="doc-biblioref" onclick="">K. H. Chen et al. 2015</a>)</span>
 <ul>
 <li>Sequence specific barcodes able to detect ~10,000 transcripts</li>
@@ -705,9 +728,6 @@ Cuevas-Diaz Duran, Raquel, Haichao Wei, and Jiaqian Wu. 2024. <span>“Data Norm
 </div>
 <div id="ref-Haque2017-ae" class="csl-entry" role="listitem">
 Haque, Ashraful, Jessica Engel, Sarah A Teichmann, and Tapio Lönnberg. 2017. <span>“A Practical Guide to Single-Cell <span>RNA</span>-Sequencing for Biomedical Research and Clinical Applications.”</span> <em>Genome Med.</em> 9 (1): 75.
-</div>
-<div id="ref-Rosenberg2018-wl" class="csl-entry" role="listitem">
-Rosenberg, Alexander B, Charles M Roco, Richard A Muscat, Anna Kuchina, Paul Sample, Zizhen Yao, Lucas T Graybuck, et al. 2018. <span>“Single-Cell Profiling of the Developing Mouse Brain and Spinal Cord with Split-Pool Barcoding.”</span> <em>Science</em> 360 (6385): 176–82.
 </div>
 <div id="ref-Stahl2016-bx" class="csl-entry" role="listitem">
 Ståhl, Patrik L, Fredrik Salmén, Sanja Vickovic, Anna Lundmark, José Fernández Navarro, Jens Magnusson, Stefania Giacomello, et al. 2016. <span>“Visualization and Analysis of Gene Expression in Tissue Sections by Spatial Transcriptomics.”</span> <em>Science</em> 353 (6294): 78–82.
@@ -937,20 +957,20 @@ Svensson, Valentine, Roser Vento-Tormo, and Sarah A Teichmann. 2018. <span>“Ex
       });
     </script>
     <div id="logo-tki" style="position: fixed; z-index: 1000;">
-      <img src="https://www.thekids.org.au/Static/Theme/images/TheKids-RGB_Logo_Colour-Pattern.svg" style="height: 80px;">
+      <img src="https://www.thekids.org.au/Static/Theme/images/TheKids-RGB_Logo_Colour-Pattern.svg" style="height: 70px;">
     </div>
     <div id="logo-bodl" style="position: fixed; z-index: 1000;">
-      <img src="assets/bodl_logo_white_background.jpg" style="height: 80px;">
+      <img src="assets/bodl_logo_white_background.jpg" style="height: 70px;">
     </div>
-    <div id="logo-uoa" style="z-index: 1000;">
-      <img src="assets/UoA_logo_col_vert.png" style="height: 80px;">
+    <div id="logo-au" style="z-index: 1000;">
+      <img src="assets/au_logo.png" style="height: 70px;">
     </div>
 
 
     <script>
     function positionLogos() {
       const tkiLogo = document.getElementById('logo-tki');
-      const uoaLogo = document.getElementById('logo-uoa');
+      const auLogo = document.getElementById('logo-au');
       const bodlLogo = document.getElementById('logo-bodl');
 
       // Check if this is RevealJS
@@ -960,31 +980,31 @@ Svensson, Valentine, Roser Vento-Tormo, and Sarah A Teichmann. 2018. <span>“Ex
 
       if (isRevealJS) {
         // RevealJS - both logos at bottom
-        tkiLogo.style.bottom = '10px';
-        tkiLogo.style.right = '340px';
+        tkiLogo.style.bottom = '5px';
+        tkiLogo.style.right = '430px';
         tkiLogo.style.top = 'auto';
         tkiLogo.style.display = 'block';
 
-        bodlLogo.style.bottom = '10px';
-        bodlLogo.style.right = '160px';
+        bodlLogo.style.bottom = '5px';
+        bodlLogo.style.right = '275px';
         bodlLogo.style.top = 'auto';
         bodlLogo.style.display = 'block';
 
-        uoaLogo.style.bottom = '10px';
-        uoaLogo.style.right = '40px';
-        uoaLogo.style.top = 'auto';
-        uoaLogo.style.display = 'block';
-        uoaLogo.style.position = 'fixed';
+        auLogo.style.bottom = '5px';
+        auLogo.style.right = '40px';
+        auLogo.style.top = 'auto';
+        auLogo.style.display = 'block';
+        auLogo.style.position = 'fixed';
       } else {
         // Flat HTML - only right logo at top
         tkiLogo.style.display = 'none';
         bodlLogo.style.display = 'none';
 
-        uoaLogo.style.top = '30px';
-        uoaLogo.style.left = '60%';
-        uoaLogo.style.bottom = 'auto';
-        uoaLogo.style.position = 'absolute';
-        uoaLogo.style.display = 'block';
+        auLogo.style.top = '10px';
+        auLogo.style.left = '55%';
+        auLogo.style.bottom = 'auto';
+        auLogo.style.position = 'absolute';
+        auLogo.style.display = 'block';
       }
     }
 

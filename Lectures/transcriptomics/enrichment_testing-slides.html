@@ -263,7 +263,7 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 </ul></li>
 </ul>
 </section>
-<section id="fishers-exact-test-1" class="slide level2">
+<section id="fishers-exact-test-1" class="slide level2 slide-only unlisted">
 <h2>Fisher’s Exact Test</h2>
 <ul>
 <li>A one-tailed Fisher’s Exact Test also defines the <em>hypergeometric distribution</em></li>
@@ -277,7 +277,7 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 </section>
 <section id="fishers-exact-test-2" class="slide level2 slide-only unlisted">
 <h2>Fisher’s Exact Test</h2>
-<div style="font-size:90%">
+<div style="font-size:94%">
 <table class="caption-top" style="width:100%;">
 <colgroup>
 <col style="width: 19%">
@@ -314,7 +314,6 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 </tr>
 </tbody>
 </table>
-</div>
 <ul>
 <li class="fragment"><span class="math inline">\(p\)</span>-value is the probability of observing a ‘more-extreme’ table than observed <em>holding marginal totals fixed</em>
 <ul>
@@ -327,6 +326,7 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <li class="fragment">FDR (e.g.&nbsp;Benjamini Hochberg): <span class="math inline">\(\alpha \implies\)</span> rate of errors within ‘significant’ results</li>
 </ul></li>
 </ul>
+</div>
 </section>
 <section id="fishers-exact-test-3" class="slide level2 slide-only unlisted">
 <h2>Fisher’s Exact Test</h2>
@@ -472,6 +472,51 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 </ul></li>
 </ul>
 </div>
+</section>
+<section id="interpreting-results" class="slide level2">
+<h2>Interpreting Results</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><img data-src="assets/gsea_results_2018.png"></p>
+</div><div class="column" style="width:45%;">
+<div style="font-size:90%">
+<ul>
+<li>Gene Sets tend to share many genes with other gene sets</li>
+<li>The name of the gene-set may be misleading</li>
+<li>Some GSEA results from a Diabetic Bone Fracture experiment in 2018</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Sars-Cov2 not yet identified
+<ul>
+<li>Gene set likely represents an inflammatory response</li>
+<li>Wound healing is probably the key</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div></div>
+</section>
+<section id="interpreting-results-1" class="slide level2 slide-only unlisted">
+<h2>Interpreting Results</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><img data-src="assets/plotPathNetwork-1.png"></p>
+</div><div class="column" style="width:45%;">
+<div style="font-size:90%">
+<ul>
+<li>Network-based approaches can simplify interpretation</li>
+<li>Cluster of pathways on the left represents the same collection of genes
+<ul>
+<li>Associated with ribosomal processes</li>
+</ul></li>
+</ul>
+<ul>
+<li class="fragment">Prostaglandin Synthesis (on right) is clearly a distinct set of genes</li>
+<li class="fragment">2x Acid Transport gene-sets (bottom-right) may suggest overlapping processes</li>
+</ul>
+</div>
+</div></div>
 </section>
 <section>
 <section id="references" class="title-slide slide level1 center">
@@ -713,20 +758,20 @@ Young, Matthew D, Matthew J Wakefield, Gordon K Smyth, and Alicia Oshlack. 2010.
       });
     </script>
     <div id="logo-tki" style="position: fixed; z-index: 1000;">
-      <img src="https://www.thekids.org.au/Static/Theme/images/TheKids-RGB_Logo_Colour-Pattern.svg" style="height: 80px;">
+      <img src="https://www.thekids.org.au/Static/Theme/images/TheKids-RGB_Logo_Colour-Pattern.svg" style="height: 70px;">
     </div>
     <div id="logo-bodl" style="position: fixed; z-index: 1000;">
-      <img src="assets/bodl_logo_white_background.jpg" style="height: 80px;">
+      <img src="assets/bodl_logo_white_background.jpg" style="height: 70px;">
     </div>
-    <div id="logo-uoa" style="z-index: 1000;">
-      <img src="assets/UoA_logo_col_vert.png" style="height: 80px;">
+    <div id="logo-au" style="z-index: 1000;">
+      <img src="assets/au_logo.png" style="height: 70px;">
     </div>
 
 
     <script>
     function positionLogos() {
       const tkiLogo = document.getElementById('logo-tki');
-      const uoaLogo = document.getElementById('logo-uoa');
+      const auLogo = document.getElementById('logo-au');
       const bodlLogo = document.getElementById('logo-bodl');
 
       // Check if this is RevealJS
@@ -736,31 +781,31 @@ Young, Matthew D, Matthew J Wakefield, Gordon K Smyth, and Alicia Oshlack. 2010.
 
       if (isRevealJS) {
         // RevealJS - both logos at bottom
-        tkiLogo.style.bottom = '10px';
-        tkiLogo.style.right = '340px';
+        tkiLogo.style.bottom = '5px';
+        tkiLogo.style.right = '430px';
         tkiLogo.style.top = 'auto';
         tkiLogo.style.display = 'block';
 
-        bodlLogo.style.bottom = '10px';
-        bodlLogo.style.right = '160px';
+        bodlLogo.style.bottom = '5px';
+        bodlLogo.style.right = '275px';
         bodlLogo.style.top = 'auto';
         bodlLogo.style.display = 'block';
 
-        uoaLogo.style.bottom = '10px';
-        uoaLogo.style.right = '40px';
-        uoaLogo.style.top = 'auto';
-        uoaLogo.style.display = 'block';
-        uoaLogo.style.position = 'fixed';
+        auLogo.style.bottom = '5px';
+        auLogo.style.right = '40px';
+        auLogo.style.top = 'auto';
+        auLogo.style.display = 'block';
+        auLogo.style.position = 'fixed';
       } else {
         // Flat HTML - only right logo at top
         tkiLogo.style.display = 'none';
         bodlLogo.style.display = 'none';
 
-        uoaLogo.style.top = '30px';
-        uoaLogo.style.left = '60%';
-        uoaLogo.style.bottom = 'auto';
-        uoaLogo.style.position = 'absolute';
-        uoaLogo.style.display = 'block';
+        auLogo.style.top = '10px';
+        auLogo.style.left = '55%';
+        auLogo.style.bottom = 'auto';
+        auLogo.style.position = 'absolute';
+        auLogo.style.display = 'block';
       }
     }
 

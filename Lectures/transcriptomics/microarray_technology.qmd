@@ -15,14 +15,14 @@ format:
     sansfont: Times New Roman
     slide-number: c
     show-slide-number: all
-    include-after-body: assets/uoa_bodl_logos.html
+    include-after-body: assets/logos.html
   html: 
     css: [assets/custom.scss]
     output-file: microarray_technology.html
     embed-resources: true    
     toc: true
     toc-depth: 2
-    include-in-header: assets/uoa_bodl_logos.html
+    include-in-header: assets/logos.html
   beamer-pdf:
     output-file: microarray_technology.pdf
     theme: Pittsburgh
@@ -294,12 +294,33 @@ knitr::include_graphics("assets/Microarray_exp_horizontal.png")
 
 [^1]: Images taken from: Bolstad, Probe Level Quantile Normalization for High Density Oligonucleotide Array Data Unpublished Manuscript, 2001
 
+## Linear Regression
+
+$$
+y = a  + bx
+$$
+
+- This is the formula for a straight line
+- The intercept term $a$ is the value for $y$ when the predictor $x = 0$
+- Slope $b$ represents change in $y$ for *every one unit change* in $x$
+
+::: {.fragment}
+- In *linear regression* we fit a line through the data allowing for errors (i.e. variation)
+
+$$
+y_i = a + bx_i + \epsilon_i
+$$
+
+- The observed value ($y_i$) is modelled as a line + variation
+    + Variation/Error: $\epsilon_i \sim \mathcal{N}(0, \sigma)$
+:::
+
 ## Background Correction
 
 - Background Correction performed *simultaneously with estimation of signal*
 - Robust Multichip Average (RMA) [@rma2003]
     + Estimates signal for each array ($\mu_i$) [$\implies$ used for differential expression]{.text-red}
-    + Model includes probe affinities ($\alpha_j$)
+    + Model includes probe affinities ($\alpha_j$) $\implies$ constant across arrays
     + [Doesn't include MM probes]{.text-red}
     + Fitted using robust statistics to reduce impact of outlier probes
     
@@ -313,44 +334,32 @@ $$
 
 :::
 
-## Linear Regression
 
-$$
-\log_2 PM_{ij} = \mu_i + \alpha_j + \epsilon_{ij}
-$$
-
-- This formula is a linear regression equation:
-    + Fitted values for expression and probe affinity
-    + An error term $\epsilon_{ij} \sim \mathcal{N}(0, \sigma)$
-
-:::: {.incremental}
-- The expression estimate $\mu_i$ is the array-specific intercept
-- Probe affinities are common and consistent across arrays
-:::
 
 ## Differential Gene Expression
 
 - For each gene $\rightarrow$ take the array-level estimates of gene expression ($\mu_{i}$) 
 - Perform a $t$-test grouped by treatment group
-    + Estimates variance ($\sigma^2_g$)
-    + Estimate change in expression: *logFC* = $\beta_g$
+    + Estimates variance for each gene ($\sigma^2_g$)
+    + Estimate change in expression: log Fold-Change (logFC)
 - logFC is on log~2~ scale:
     + logFC = 0 $\implies$ unchanged expression
     + logFC = 1 $\implies$ doubling in RNA abundance
+    + logFC = -1 $\implies$ halving of RNA abundance
 
 
 ## Differential Gene Expression {.slide-only .unlisted}
 
 - logFC estimates can also be from fitting *linear regression models*
+    + The same model is fit for every gene ($g$)
     + Might use a covariate (e.g. age) alongside key predictor (i.e. diagnosis)
 
 $$
 \mu_{ij}  = \beta_0 + \beta_{1}x_j + \epsilon_{ij}
 $$
 
-- Commonly $\beta_0$ is the average expression
+- Commonly $\beta_0$ is the average expression in the control group
 - The group variable $x_j$ would be $x_1 = 0$ for control ($j = 1$) and $x_2 = 1$ for treated
-    + $\beta_0$ becomes the *expected expression in control samples*
     + $\beta_1$ becomes the *expected difference in expression after treatment* $\implies$ logFC
 - The variability around the predicted values is $\epsilon_{ij} \sim \mathcal{N}(0, \sigma)$    
 
@@ -363,8 +372,8 @@ T = \frac{\beta_{1}}{\sigma/\sqrt{n}}
 $$
 
 - Some estimates of variance will be over/under-estimates
-    + $\hat{\sigma}_g$ too low $\implies T \uparrow$ [$\implies$ significant result where no change]{.fragment}
-    + $\hat{\sigma}_g$ too high $\implies T\downarrow$ [$\implies$ no significant result where there is change]{.fragment}
+    + $\hat{\sigma}$ too low $\implies T \uparrow$ [$\implies$ significant result where no change]{.fragment}
+    + $\hat{\sigma}$ too high $\implies T\downarrow$ [$\implies$ no significant result where there is change]{.fragment}
     
     
 ::: {.fragment}
