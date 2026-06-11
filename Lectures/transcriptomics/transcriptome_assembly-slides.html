@@ -298,9 +298,27 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <li>Reads broken into shorter <em>k</em>-mers</li>
 <li>Adjacent <em>k</em>-mers <span class="math inline">\(\rightarrow\)</span> graph</li>
 <li>Wise choice of <em>k</em> helps extend graph well beyond read length</li>
+<li>Different <em>k</em> <span class="math inline">\(\implies\)</span> different assembly</li>
 <li>Well-represented paths through graph <span class="math inline">\(\rightarrow\)</span> transcripts</li>
 </ul>
 </div></div>
+</section>
+<section id="a-trinity-assembled-transcriptome" class="slide level2">
+<h2>A Trinity Assembled Transcriptome</h2>
+<ul>
+<li>Assembly returns a Fasta file with all assembled transcripts</li>
+</ul>
+<pre><code> &gt;TRINITY_DN1000_c115_g5_i1 len=247 path=[31015:0-148 23018:149-246]
+ AATCTTTTTTGGTATTGGCAGTACTGTGCTCTGGGTAGTGATTAGGGCAAAAGAAGACAC
+ ACAATAAAGAACCAGGTGTTAGACGTCAGCAAGTCAAGGCCTTGGTTCTCAGCAGACAGA
+ AGACAGCCCTTCTCAATCCTCATCCCTTCCCTGAACAGACATGTCTTCTGCAAGCTTCTC
+ CAAGTCAGTTGTTCACAGGAACATCATCAGAATAAATTTGAAATTATGATTAGTATCTGA
+ TAAAGCA</code></pre>
+<ul>
+<li>Read cluster <code>TRINITY_DN1000_c115</code>; Gene <code>g5</code>; Isoform <code>i1</code></li>
+<li>Pathway through graph is output</li>
+<li>If diploid organism <span class="math inline">\(\rightarrow\)</span> both maternal &amp; paternal transcripts</li>
+</ul>
 </section>
 <section id="assessing-assembly-quality" class="slide level2">
 <h2>Assessing Assembly Quality</h2>
@@ -343,7 +361,11 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <ul>
 <li>Sequence (near-)complete transcripts</li>
 </ul></li>
-<li>Transposon expression in relevant cell types</li>
+<li>Capture “difficult” transcripts:
+<ul>
+<li>Transposable Elements (TEs)</li>
+<li><em>DUX4</em> within repeat array with 11-150 repeats</li>
+</ul></li>
 <li>Quantification approaching short-read consistency
 <ul>
 <li>Overcomes fragmentation bias in short-read technology <span class="citation" data-cites="Chen2025-sh">(<a href="#/section" role="doc-biblioref" onclick="">Chen et al. 2025</a>)</span></li>
@@ -367,8 +389,13 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 </div><div class="column" style="width:37%;">
 <ul>
 <li>From 50 bp to &gt;4 Mb</li>
-<li>Can sequence RNA or cDNA (pre/post-PCR)</li>
-<li>More error prone</li>
+<li>Can directly sequence RNA
+<ul>
+<li>No PCR bias</li>
+<li>RNA-modifications</li>
+</ul></li>
+<li>Also cDNA sequencing</li>
+<li>Errors corrected using deep learning</li>
 </ul>
 </div></div>
 </section>
@@ -388,7 +415,7 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <ul>
 <li>Up to 25kb</li>
 <li>Sequence cDNA only</li>
-<li>Highly accurate reads</li>
+<li>Circularisation <span class="math inline">\(\implies\)</span> Highly accurate reads</li>
 </ul></li>
 </ul>
 </div></div>
@@ -642,20 +669,20 @@ Tegenfeldt, Fredrik, Dmitry Kuznetsov, Mosè Manni, Matthew Berkeley, Evgeny M Z
       });
     </script>
     <div id="logo-tki" style="position: fixed; z-index: 1000;">
-      <img src="https://www.thekids.org.au/Static/Theme/images/TheKids-RGB_Logo_Colour-Pattern.svg" style="height: 80px;">
+      <img src="https://www.thekids.org.au/Static/Theme/images/TheKids-RGB_Logo_Colour-Pattern.svg" style="height: 70px;">
     </div>
     <div id="logo-bodl" style="position: fixed; z-index: 1000;">
-      <img src="assets/bodl_logo_white_background.jpg" style="height: 80px;">
+      <img src="assets/bodl_logo_white_background.jpg" style="height: 70px;">
     </div>
-    <div id="logo-uoa" style="z-index: 1000;">
-      <img src="assets/UoA_logo_col_vert.png" style="height: 80px;">
+    <div id="logo-au" style="z-index: 1000;">
+      <img src="assets/au_logo.png" style="height: 70px;">
     </div>
 
 
     <script>
     function positionLogos() {
       const tkiLogo = document.getElementById('logo-tki');
-      const uoaLogo = document.getElementById('logo-uoa');
+      const auLogo = document.getElementById('logo-au');
       const bodlLogo = document.getElementById('logo-bodl');
 
       // Check if this is RevealJS
@@ -665,31 +692,31 @@ Tegenfeldt, Fredrik, Dmitry Kuznetsov, Mosè Manni, Matthew Berkeley, Evgeny M Z
 
       if (isRevealJS) {
         // RevealJS - both logos at bottom
-        tkiLogo.style.bottom = '10px';
-        tkiLogo.style.right = '340px';
+        tkiLogo.style.bottom = '5px';
+        tkiLogo.style.right = '430px';
         tkiLogo.style.top = 'auto';
         tkiLogo.style.display = 'block';
 
-        bodlLogo.style.bottom = '10px';
-        bodlLogo.style.right = '160px';
+        bodlLogo.style.bottom = '5px';
+        bodlLogo.style.right = '275px';
         bodlLogo.style.top = 'auto';
         bodlLogo.style.display = 'block';
 
-        uoaLogo.style.bottom = '10px';
-        uoaLogo.style.right = '40px';
-        uoaLogo.style.top = 'auto';
-        uoaLogo.style.display = 'block';
-        uoaLogo.style.position = 'fixed';
+        auLogo.style.bottom = '5px';
+        auLogo.style.right = '40px';
+        auLogo.style.top = 'auto';
+        auLogo.style.display = 'block';
+        auLogo.style.position = 'fixed';
       } else {
         // Flat HTML - only right logo at top
         tkiLogo.style.display = 'none';
         bodlLogo.style.display = 'none';
 
-        uoaLogo.style.top = '30px';
-        uoaLogo.style.left = '60%';
-        uoaLogo.style.bottom = 'auto';
-        uoaLogo.style.position = 'absolute';
-        uoaLogo.style.display = 'block';
+        auLogo.style.top = '10px';
+        auLogo.style.left = '55%';
+        auLogo.style.bottom = 'auto';
+        auLogo.style.position = 'absolute';
+        auLogo.style.display = 'block';
       }
     }
 

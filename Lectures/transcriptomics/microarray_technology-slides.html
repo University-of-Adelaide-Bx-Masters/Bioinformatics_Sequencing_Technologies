@@ -469,6 +469,31 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 </ul>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>Images taken from: Bolstad, Probe Level Quantile Normalization for High Density Oligonucleotide Array Data Unpublished Manuscript, 2001</p></li></ol></aside></section>
+<section id="linear-regression" class="slide level2">
+<h2>Linear Regression</h2>
+<p><span class="math display">\[
+y = a  + bx
+\]</span></p>
+<ul>
+<li>This is the formula for a straight line</li>
+<li>The intercept term <span class="math inline">\(a\)</span> is the value for <span class="math inline">\(y\)</span> when the predictor <span class="math inline">\(x = 0\)</span></li>
+<li>Slope <span class="math inline">\(b\)</span> represents change in <span class="math inline">\(y\)</span> for <em>every one unit change</em> in <span class="math inline">\(x\)</span></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>In <em>linear regression</em> we fit a line through the data allowing for errors (i.e.&nbsp;variation)</li>
+</ul>
+<p><span class="math display">\[
+y_i = a + bx_i + \epsilon_i
+\]</span></p>
+<ul>
+<li>The observed value (<span class="math inline">\(y_i\)</span>) is modelled as a line + variation
+<ul>
+<li>Variation/Error: <span class="math inline">\(\epsilon_i \sim \mathcal{N}(0, \sigma)\)</span></li>
+</ul></li>
+</ul>
+</div>
+</section>
 <section id="background-correction" class="slide level2">
 <h2>Background Correction</h2>
 <ul>
@@ -476,7 +501,7 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <li>Robust Multichip Average (RMA) <span class="citation" data-cites="rma2003">(<a href="#/section" role="doc-biblioref" onclick="">Irizarry et al. 2003</a>)</span>
 <ul>
 <li>Estimates signal for each array (<span class="math inline">\(\mu_i\)</span>) <span class="text-red"><span class="math inline">\(\implies\)</span> used for differential expression</span></li>
-<li>Model includes probe affinities (<span class="math inline">\(\alpha_j\)</span>)</li>
+<li>Model includes probe affinities (<span class="math inline">\(\alpha_j\)</span>) <span class="math inline">\(\implies\)</span> constant across arrays</li>
 <li><span class="text-red">Doesn’t include MM probes</span></li>
 <li>Fitted using robust statistics to reduce impact of outlier probes</li>
 </ul></li>
@@ -490,36 +515,20 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 </ul>
 </div>
 </section>
-<section id="linear-regression" class="slide level2">
-<h2>Linear Regression</h2>
-<p><span class="math display">\[
-\log_2 PM_{ij} = \mu_i + \alpha_j + \epsilon_{ij}
-\]</span></p>
-<ul>
-<li>This formula is a linear regression equation:
-<ul>
-<li>Fitted values for expression and probe affinity</li>
-<li>An error term <span class="math inline">\(\epsilon_{ij} \sim \mathcal{N}(0, \sigma)\)</span></li>
-</ul></li>
-</ul>
-<ul>
-<li class="fragment">The expression estimate <span class="math inline">\(\mu_i\)</span> is the array-specific intercept</li>
-<li class="fragment">Probe affinities are common and consistent across arrays</li>
-</ul>
-</section>
 <section id="differential-gene-expression-1" class="slide level2">
 <h2>Differential Gene Expression</h2>
 <ul>
 <li>For each gene <span class="math inline">\(\rightarrow\)</span> take the array-level estimates of gene expression (<span class="math inline">\(\mu_{i}\)</span>)</li>
 <li>Perform a <span class="math inline">\(t\)</span>-test grouped by treatment group
 <ul>
-<li>Estimates variance (<span class="math inline">\(\sigma^2_g\)</span>)</li>
-<li>Estimate change in expression: <em>logFC</em> = <span class="math inline">\(\beta_g\)</span></li>
+<li>Estimates variance for each gene (<span class="math inline">\(\sigma^2_g\)</span>)</li>
+<li>Estimate change in expression: log Fold-Change (logFC)</li>
 </ul></li>
 <li>logFC is on log<sub>2</sub> scale:
 <ul>
 <li>logFC = 0 <span class="math inline">\(\implies\)</span> unchanged expression</li>
 <li>logFC = 1 <span class="math inline">\(\implies\)</span> doubling in RNA abundance</li>
+<li>logFC = -1 <span class="math inline">\(\implies\)</span> halving of RNA abundance</li>
 </ul></li>
 </ul>
 </section>
@@ -528,6 +537,7 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <ul>
 <li>logFC estimates can also be from fitting <em>linear regression models</em>
 <ul>
+<li>The same model is fit for every gene (<span class="math inline">\(g\)</span>)</li>
 <li>Might use a covariate (e.g.&nbsp;age) alongside key predictor (i.e.&nbsp;diagnosis)</li>
 </ul></li>
 </ul>
@@ -535,10 +545,9 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 \mu_{ij}  = \beta_0 + \beta_{1}x_j + \epsilon_{ij}
 \]</span></p>
 <ul>
-<li>Commonly <span class="math inline">\(\beta_0\)</span> is the average expression</li>
+<li>Commonly <span class="math inline">\(\beta_0\)</span> is the average expression in the control group</li>
 <li>The group variable <span class="math inline">\(x_j\)</span> would be <span class="math inline">\(x_1 = 0\)</span> for control (<span class="math inline">\(j = 1\)</span>) and <span class="math inline">\(x_2 = 1\)</span> for treated
 <ul>
-<li><span class="math inline">\(\beta_0\)</span> becomes the <em>expected expression in control samples</em></li>
 <li><span class="math inline">\(\beta_1\)</span> becomes the <em>expected difference in expression after treatment</em> <span class="math inline">\(\implies\)</span> logFC</li>
 </ul></li>
 <li>The variability around the predicted values is <span class="math inline">\(\epsilon_{ij} \sim \mathcal{N}(0, \sigma)\)</span></li>
@@ -552,8 +561,8 @@ T = \frac{\beta_{1}}{\sigma/\sqrt{n}}
 <ul>
 <li>Some estimates of variance will be over/under-estimates
 <ul>
-<li><span class="math inline">\(\hat{\sigma}_g\)</span> too low <span class="math inline">\(\implies T \uparrow\)</span> <span class="fragment"><span class="math inline">\(\implies\)</span> significant result where no change</span></li>
-<li><span class="math inline">\(\hat{\sigma}_g\)</span> too high <span class="math inline">\(\implies T\downarrow\)</span> <span class="fragment"><span class="math inline">\(\implies\)</span> no significant result where there is change</span></li>
+<li><span class="math inline">\(\hat{\sigma}\)</span> too low <span class="math inline">\(\implies T \uparrow\)</span> <span class="fragment"><span class="math inline">\(\implies\)</span> significant result where no change</span></li>
+<li><span class="math inline">\(\hat{\sigma}\)</span> too high <span class="math inline">\(\implies T\downarrow\)</span> <span class="fragment"><span class="math inline">\(\implies\)</span> no significant result where there is change</span></li>
 </ul></li>
 </ul>
 <div class="fragment">
@@ -869,20 +878,20 @@ Wu, Zhijin, Rafael A Irizarry, Robert Gentleman, Francisco Martinez-Murillo, and
       });
     </script>
     <div id="logo-tki" style="position: fixed; z-index: 1000;">
-      <img src="https://www.thekids.org.au/Static/Theme/images/TheKids-RGB_Logo_Colour-Pattern.svg" style="height: 80px;">
+      <img src="https://www.thekids.org.au/Static/Theme/images/TheKids-RGB_Logo_Colour-Pattern.svg" style="height: 70px;">
     </div>
     <div id="logo-bodl" style="position: fixed; z-index: 1000;">
-      <img src="assets/bodl_logo_white_background.jpg" style="height: 80px;">
+      <img src="assets/bodl_logo_white_background.jpg" style="height: 70px;">
     </div>
-    <div id="logo-uoa" style="z-index: 1000;">
-      <img src="assets/UoA_logo_col_vert.png" style="height: 80px;">
+    <div id="logo-au" style="z-index: 1000;">
+      <img src="assets/au_logo.png" style="height: 70px;">
     </div>
 
 
     <script>
     function positionLogos() {
       const tkiLogo = document.getElementById('logo-tki');
-      const uoaLogo = document.getElementById('logo-uoa');
+      const auLogo = document.getElementById('logo-au');
       const bodlLogo = document.getElementById('logo-bodl');
 
       // Check if this is RevealJS
@@ -892,31 +901,31 @@ Wu, Zhijin, Rafael A Irizarry, Robert Gentleman, Francisco Martinez-Murillo, and
 
       if (isRevealJS) {
         // RevealJS - both logos at bottom
-        tkiLogo.style.bottom = '10px';
-        tkiLogo.style.right = '340px';
+        tkiLogo.style.bottom = '5px';
+        tkiLogo.style.right = '430px';
         tkiLogo.style.top = 'auto';
         tkiLogo.style.display = 'block';
 
-        bodlLogo.style.bottom = '10px';
-        bodlLogo.style.right = '160px';
+        bodlLogo.style.bottom = '5px';
+        bodlLogo.style.right = '275px';
         bodlLogo.style.top = 'auto';
         bodlLogo.style.display = 'block';
 
-        uoaLogo.style.bottom = '10px';
-        uoaLogo.style.right = '40px';
-        uoaLogo.style.top = 'auto';
-        uoaLogo.style.display = 'block';
-        uoaLogo.style.position = 'fixed';
+        auLogo.style.bottom = '5px';
+        auLogo.style.right = '40px';
+        auLogo.style.top = 'auto';
+        auLogo.style.display = 'block';
+        auLogo.style.position = 'fixed';
       } else {
         // Flat HTML - only right logo at top
         tkiLogo.style.display = 'none';
         bodlLogo.style.display = 'none';
 
-        uoaLogo.style.top = '30px';
-        uoaLogo.style.left = '60%';
-        uoaLogo.style.bottom = 'auto';
-        uoaLogo.style.position = 'absolute';
-        uoaLogo.style.display = 'block';
+        auLogo.style.top = '10px';
+        auLogo.style.left = '55%';
+        auLogo.style.bottom = 'auto';
+        auLogo.style.position = 'absolute';
+        auLogo.style.display = 'block';
       }
     }
 

@@ -14,14 +14,14 @@ format:
     sansfont: Times New Roman
     slide-number: c
     show-slide-number: all
-    include-after-body: assets/uoa_bodl_logos.html
+    include-after-body: assets/logos.html
   html: 
     css: [assets/custom.scss]
     output-file: enrichment_testing.html
     embed-resources: true    
     toc: true
     toc-depth: 2
-    include-in-header: assets/uoa_bodl_logos.html
+    include-in-header: assets/logos.html
   beamer-pdf:
     output-file: enrichment_testing.pdf
     theme: Pittsburgh
@@ -71,7 +71,7 @@ We use enrichment testing on suitable *gene-sets*
 
 ```{r gene-ontology, out.width='100%', fig.cap = "https://www.ebi.ac.uk/QuickGO/term/GO:0008327"}
 #| echo: false
-knitr::include_graphics(here::here("assets/GO_0008327.png"))
+knitr::include_graphics(here::here("lectures/assets/GO_0008327.png"))
 ```
 
 :::
@@ -94,7 +94,7 @@ knitr::include_graphics(here::here("assets/GO_0008327.png"))
 
 ```{r kegg, out.width='100%', fig.cap = "https://www.kegg.jp/pathway/map00020"}
 #| echo: false
-knitr::include_graphics(here::here("assets/kegg_citrate_cycle.png"))
+knitr::include_graphics(here::here("lectures/assets/kegg_citrate_cycle.png"))
 ```
 
 :::
@@ -120,7 +120,7 @@ knitr::include_graphics(here::here("assets/kegg_citrate_cycle.png"))
 - Similar to a $\chi^2$-test but no model assumptions
     + Computationally more demanding
 
-## Fisher's Exact Test
+## Fisher's Exact Test  {.slide-only .unlisted}
 
 - A one-tailed Fisher's Exact Test also defines the *hypergeometric distribution*
 - If we have white & red marbles in an urn
@@ -136,14 +136,13 @@ knitr::include_graphics(here::here("assets/kegg_citrate_cycle.png"))
 :::
 
 
-::: {style='font-size:90%'}
+::: {style='font-size:94%'}
 
 |             | In Gene-set | Not In Gene-set | [Row Totals]{.fragment fragment-index=1 .text-red}  |
 |:----------------- | -----------------------:| ----------------------------:| ----------------------:|
 | DE Genes    |   $a$   |   $b$   | [$a+b$]{.fragment fragment-index=1 .text-red}  |
 | Not DE      |   $c$   |   $d$   | [$c+d$]{.fragment fragment-index=1 .text-red}  |
 | [**Column Totals**]{.fragment fragment-index=2 .text-red}  | [$a+c$]{.fragment fragment-index=2 .text-red}  | [$b+d$]{.fragment fragment-index=2 .text-red}  | [$a+b+c+d$]{.fragment fragment-index=3 .text-red}  |
-:::
 
 ::: {.content-visible when-format="beamer"}
 \normalsize
@@ -158,6 +157,7 @@ knitr::include_graphics(here::here("assets/kegg_citrate_cycle.png"))
     + FWER (e.g. Bonferroni): $\alpha \implies$ probability of any errors at all
     + FDR (e.g. Benjamini Hochberg): $\alpha \implies$ rate of errors within 'significant' results
 
+:::
 :::
 
 ## Fisher's Exact Test {.slide-only .unlisted}
@@ -250,6 +250,53 @@ knitr::include_graphics(here::here("assets/kegg_citrate_cycle.png"))
 
 :::
     
+
+## Interpreting Results
+
+:::: {.columns}
+::: {.column width='55%'}
+![](assets/gsea_results_2018.png)
+:::
+::: {.column width='45%'}
+::: {style="font-size:90%"}
+
+- Gene Sets tend to share many genes with other gene sets
+- The name of the gene-set may be misleading
+- Some GSEA results from a Diabetic Bone Fracture experiment in 2018
+
+::: {.fragment}
+
+- Sars-Cov2 not yet identified
+    + Gene set likely represents an inflammatory response
+    + Wound healing is probably the key
+
+:::
+:::
+:::
+::::
+
+## Interpreting Results {.slide-only .unlisted}
+
+:::: {.columns}
+::: {.column width='55%'}
+![](assets/plotPathNetwork-1.png)
+:::
+::: {.column width='45%'}
+::: {style="font-size:90%"}
+
+- Network-based approaches can simplify interpretation
+- Cluster of pathways on the left represents the same collection of genes
+    + Associated with ribosomal processes
+
+::: {.incremental}
+    
+- Prostaglandin Synthesis (on right) is clearly a distinct set of genes
+- 2x Acid Transport gene-sets (bottom-right) may suggest overlapping processes
+
+:::
+:::
+:::
+::::
 
 # References
 

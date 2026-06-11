@@ -177,8 +177,8 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <p>RNA-Seq, also called RNA sequencing, is a particular technology-based sequencing technique which uses next-generation sequencing (NGS) to reveal the <strong>presence</strong> and <strong>quantity</strong> of RNA in a biological sample at a <strong>given moment</strong>, analyzing the continuously changing cellular transcriptome.</p>
 </blockquote>
 </section>
-<section id="rna-sequencing-1" class="slide level2 slide-only unlisted">
-<h2>RNA Sequencing</h2>
+<section id="rna-sequencing-vs-microarrays" class="slide level2 slide-only unlisted">
+<h2>RNA Sequencing Vs Microarrays</h2>
 <div class="columns">
 <div class="column">
 <ul>
@@ -211,8 +211,8 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 </div>
 </div></div>
 </section>
-<section id="rna-sequencing-2" class="slide level2 slide-only unlisted">
-<h2>RNA Sequencing</h2>
+<section id="rna-sequencing-vs-microarrays-1" class="slide level2 slide-only unlisted">
+<h2>RNA Sequencing Vs Microarrays</h2>
 <ul>
 <li>Microarrays rely on probes for transcripts defined <em>at design time</em></li>
 <li>Restricted in the number of transcripts/genes targeted
@@ -221,19 +221,24 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <li>Gencode 48 (GRCh38): 78,686 genes + 385,669 transcripts</li>
 </ul></li>
 <li>Probes capture non-specific binding</li>
-<li>Measuring a labelled cDNA: fluourescence <span class="math inline">\(\propto\)</span> RNA abundace</li>
+<li>Measuring a labelled cDNA:
+<ul>
+<li>Fluorescence <span class="math inline">\(\propto\)</span> RNA abundance</li>
+<li>No sequence information</li>
+</ul></li>
 </ul>
 <div class="fragment">
 <p><span class="text-red">These limitations do not exist for RNA-Seq</span></p>
 </div>
 </section>
-<section id="rna-sequencing-3" class="slide level2 slide-only unlisted">
-<h2>RNA Sequencing</h2>
+<section id="rna-sequencing-vs-microarrays-2" class="slide level2 slide-only unlisted">
+<h2>RNA Sequencing Vs Microarrays</h2>
 <ul>
-<li>Directly sequence the biological material</li>
+<li>Directly sequence the biological material (via cDNA)</li>
 <li>Map to most recent reference at any point in time</li>
 <li>Assemble a transcriptome (tissue specific)</li>
 <li>Detect InDels / SNPs in expressed sequences</li>
+<li>Detect any allelic bias</li>
 </ul>
 <div class="fragment">
 <ul>
@@ -358,7 +363,7 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <li>Sequencing data arrives as FastQ files
 <ul>
 <li>Standard QC (<code>FastQC</code>/<code>fastp</code>)</li>
-<li>Optional Adapter Removal</li>
+<li>Optional Adapter Removal, discarding short &amp; low quality reads etc</li>
 </ul></li>
 <li>Alignment to a reference genome needs to be splice aware
 <ul>
@@ -402,7 +407,8 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <li>Easy in theory but biology is often inconvenient
 <ul>
 <li>Most alignments will neatly be within exons or across splice junctions</li>
-<li>Some are not</li>
+<li>Some are not…</li>
+<li>Some reads align to multiple loci, i.e.&nbsp;multi-mapping</li>
 </ul></li>
 </ul>
 </section>
@@ -506,7 +512,7 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 </ul></li>
 </ul>
 <p><span class="math display">\[
-\text{var}(y_{gi}) = \sigma^2_g\left(\mu_{gi} +\phi\mu^2_{gi})\right), \text{where } \phi &gt; 0
+\text{var}(y_{gi}) = \sigma^2_g\left(\mu_{gi} +\phi\mu^2_{gi}\right), \text{where } \phi &gt; 0
 \]</span></p>
 <div class="fragment">
 <ul>
@@ -971,20 +977,20 @@ Yu, Nancy Yiu-Lin, Björn M. Hallström, Linn Fagerberg, Fredrik Ponten, Hideya 
       });
     </script>
     <div id="logo-tki" style="position: fixed; z-index: 1000;">
-      <img src="https://www.thekids.org.au/Static/Theme/images/TheKids-RGB_Logo_Colour-Pattern.svg" style="height: 80px;">
+      <img src="https://www.thekids.org.au/Static/Theme/images/TheKids-RGB_Logo_Colour-Pattern.svg" style="height: 70px;">
     </div>
     <div id="logo-bodl" style="position: fixed; z-index: 1000;">
-      <img src="assets/bodl_logo_white_background.jpg" style="height: 80px;">
+      <img src="assets/bodl_logo_white_background.jpg" style="height: 70px;">
     </div>
-    <div id="logo-uoa" style="z-index: 1000;">
-      <img src="assets/UoA_logo_col_vert.png" style="height: 80px;">
+    <div id="logo-au" style="z-index: 1000;">
+      <img src="assets/au_logo.png" style="height: 70px;">
     </div>
 
 
     <script>
     function positionLogos() {
       const tkiLogo = document.getElementById('logo-tki');
-      const uoaLogo = document.getElementById('logo-uoa');
+      const auLogo = document.getElementById('logo-au');
       const bodlLogo = document.getElementById('logo-bodl');
 
       // Check if this is RevealJS
@@ -994,31 +1000,31 @@ Yu, Nancy Yiu-Lin, Björn M. Hallström, Linn Fagerberg, Fredrik Ponten, Hideya 
 
       if (isRevealJS) {
         // RevealJS - both logos at bottom
-        tkiLogo.style.bottom = '10px';
-        tkiLogo.style.right = '340px';
+        tkiLogo.style.bottom = '5px';
+        tkiLogo.style.right = '430px';
         tkiLogo.style.top = 'auto';
         tkiLogo.style.display = 'block';
 
-        bodlLogo.style.bottom = '10px';
-        bodlLogo.style.right = '160px';
+        bodlLogo.style.bottom = '5px';
+        bodlLogo.style.right = '275px';
         bodlLogo.style.top = 'auto';
         bodlLogo.style.display = 'block';
 
-        uoaLogo.style.bottom = '10px';
-        uoaLogo.style.right = '40px';
-        uoaLogo.style.top = 'auto';
-        uoaLogo.style.display = 'block';
-        uoaLogo.style.position = 'fixed';
+        auLogo.style.bottom = '5px';
+        auLogo.style.right = '40px';
+        auLogo.style.top = 'auto';
+        auLogo.style.display = 'block';
+        auLogo.style.position = 'fixed';
       } else {
         // Flat HTML - only right logo at top
         tkiLogo.style.display = 'none';
         bodlLogo.style.display = 'none';
 
-        uoaLogo.style.top = '30px';
-        uoaLogo.style.left = '60%';
-        uoaLogo.style.bottom = 'auto';
-        uoaLogo.style.position = 'absolute';
-        uoaLogo.style.display = 'block';
+        auLogo.style.top = '10px';
+        auLogo.style.left = '55%';
+        auLogo.style.bottom = 'auto';
+        auLogo.style.position = 'absolute';
+        auLogo.style.display = 'block';
       }
     }
 
