@@ -25,10 +25,19 @@ knitr:
   opts_chunk: 
     set:
       echo: false
+      message: false
+      warning: false
       fig.align: 'left'
 ---
 
 ## [Acknowledgement Of Country]{.text-red}
+
+```{r opts_set, echo = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, message = FALSE, warning = FALSE
+)
+```
+
 
 ::: {.text-red}
 
@@ -43,6 +52,7 @@ I pay my respects to the cultural authority of Aboriginal and Torres Strait Isla
 ## Who Developed R?
 
 - Developed at U Auckland by [Ross Ihaka](https://www.stat.auckland.ac.nz/~ihaka/) & [Robert Gentleman](https://hsph.harvard.edu/profile/robert-gentleman/)
+    + Rewrote the language `S` [@chambers1977computational]
 - v1.0.0 released in Feb 2000
 - Packages are hosted on the Comprehensive R Archive Network ([CRAN](https://cran.r-project.org))
     + This is where `install.packages()` looks
@@ -56,7 +66,7 @@ I pay my respects to the cultural authority of Aboriginal and Torres Strait Isla
 ::: {.column}
 
 - Robert Gentleman is a bioinformatician $\implies$ understood key needs of the field
-- Started developing the Bioconductor Project in 2001
+- Started developing the Bioconductor Project in 2001 [@Gentleman2004-sd]
     + First official release v1.0 in May 2002 (R v1.5)
 
 :::
@@ -94,6 +104,95 @@ For a microrray/RNA-Seq dataset we have three primary data objects
 1. Sample annotations and metadata
 2. Gene-Level information
 3. Expression measurements (counts, fluoresence etc)
+
+## Common Data Structures {.slide-only .unlisted}
+
+A matrix of gene-level counts
+
+```{r}
+options(width = 100)
+library(SummarizedExperiment)
+data(airway, package="airway")
+assay(airway, "counts")[1:10, 1:6]
+```
+
+::: {.incremental}
+- How do we store information about each sample?
+- And each gene?
+:::
+
+## Common Data Structures {.slide-only .unlisted}
+
+Sample information might look like
+
+```{r}
+colData(airway)[1:6, 1:8]
+```
+
+::: {.incremental}
+- Fragment length, treatment, cell line
+- Sequencing, experiment & sample IDs
+:::
+
+## Common Data Structures {.slide-only .unlisted}
+
+Gene information might look like
+
+```{r}
+rowData(airway)[1:10, c(2, 4:8)]
+```
+
+## Common Data Structures {.slide-only .unlisted}
+
+:::: {.columns}
+::: {.column width='55%'}
+
+![](assets/se.png)
+
+:::
+::: {.column width='45%'}
+- The `SummarizedExperiment` class [@Morgan2026]
+- Samples are the columns $\implies$ `colData`
+- Genes are the rows $\implies$ `rowData`
+- Optional `metadata`
+- Everything in one object
+
+:::
+::::
+
+## Common Data Structures {.slide-only .unlisted}
+
+- The Digital Gene Expression List (`DGEList`) is similar
+- Used by `edgeR` for RNA-Seq analysis [@Chen2025]
+
+::: {.fragment}
+- `SummarizedExperiment` objects can be extended
+    + `DESeq2` [@Love2014]use a `DESeqDataSet`
+    + Tree-based relationships
+    + `SingleCellExperiment` etc
+    
+:::
+
+## Installing Bioconductor Packages
+
+- The package `BiocManager` installs from Bioconductor and CRAN
+    + Hosted itself on CRAN `install.packages("BiocManager")`
+- Then use to install from either repository
+
+```
+library(BiocManager)
+install("DESeq2")
+```
+
+## The Bioconductor Ecosystem
+
+- Standardised core object structures used widely with ecosystem
+    + Heavily relies on the `S4` class system
+- Strongly interdependent packages
+- Bioconductor Core Team ensure stable build testing, new submissions etc
+- Strong focus on community support for users & developers
+    + Several key Bioc developers in Adelaide & Australia
+- Regional conferences, workshops, seminar series etc
 
 # References
 

@@ -174,7 +174,10 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <section id="who-developed-r" class="slide level2">
 <h2>Who Developed R?</h2>
 <ul>
-<li>Developed at U Auckland by <a href="https://www.stat.auckland.ac.nz/~ihaka/">Ross Ihaka</a> &amp; <a href="https://hsph.harvard.edu/profile/robert-gentleman/">Robert Gentleman</a></li>
+<li>Developed at U Auckland by <a href="https://www.stat.auckland.ac.nz/~ihaka/">Ross Ihaka</a> &amp; <a href="https://hsph.harvard.edu/profile/robert-gentleman/">Robert Gentleman</a>
+<ul>
+<li>Rewrote the language <code>S</code> <span class="citation" data-cites="chambers1977computational">(<a href="#/section" role="doc-biblioref" onclick="">Chambers 1977</a>)</span></li>
+</ul></li>
 <li>v1.0.0 released in Feb 2000</li>
 <li>Packages are hosted on the Comprehensive R Archive Network (<a href="https://cran.r-project.org">CRAN</a>)
 <ul>
@@ -191,7 +194,7 @@ Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au
 <div class="column">
 <ul>
 <li>Robert Gentleman is a bioinformatician <span class="math inline">\(\implies\)</span> understood key needs of the field</li>
-<li>Started developing the Bioconductor Project in 2001
+<li>Started developing the Bioconductor Project in 2001 <span class="citation" data-cites="Gentleman2004-sd">(<a href="#/section" role="doc-biblioref" onclick="">Gentleman et al. 2004</a>)</span>
 <ul>
 <li>First official release v1.0 in May 2002 (R v1.5)</li>
 </ul></li>
@@ -239,6 +242,131 @@ With <span class="citation" data-cites="helucro.bsky.social">(<a href="#/section
 <li>Expression measurements (counts, fluoresence etc)</li>
 </ol>
 </section>
+<section id="common-data-structures-1" class="slide level2 slide-only unlisted">
+<h2>Common Data Structures</h2>
+<p>A matrix of gene-level counts</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517
+ENSG00000000003        679        448        873        408       1138       1047
+ENSG00000000005          0          0          0          0          0          0
+ENSG00000000419        467        515        621        365        587        799
+ENSG00000000457        260        211        263        164        245        331
+ENSG00000000460         60         55         40         35         78         63
+ENSG00000000938          0          0          2          0          1          0
+ENSG00000000971       3251       3679       6177       4252       6721      11027
+ENSG00000001036       1433       1062       1733        881       1424       1439
+ENSG00000001084        519        380        595        493        820        714
+ENSG00000001167        394        236        464        175        658        584</code></pre>
+</div>
+</div>
+<ul>
+<li class="fragment">How do we store information about each sample?</li>
+<li class="fragment">And each gene?</li>
+</ul>
+</section>
+<section id="common-data-structures-2" class="slide level2 slide-only unlisted">
+<h2>Common Data Structures</h2>
+<p>Sample information might look like</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 6 rows and 8 columns
+           SampleName     cell      dex    albut        Run avgLength Experiment    Sample
+             &lt;factor&gt; &lt;factor&gt; &lt;factor&gt; &lt;factor&gt;   &lt;factor&gt; &lt;integer&gt;   &lt;factor&gt;  &lt;factor&gt;
+SRR1039508 GSM1275862  N61311     untrt    untrt SRR1039508       126  SRX384345 SRS508568
+SRR1039509 GSM1275863  N61311     trt      untrt SRR1039509       126  SRX384346 SRS508567
+SRR1039512 GSM1275866  N052611    untrt    untrt SRR1039512       126  SRX384349 SRS508571
+SRR1039513 GSM1275867  N052611    trt      untrt SRR1039513        87  SRX384350 SRS508572
+SRR1039516 GSM1275870  N080611    untrt    untrt SRR1039516       120  SRX384353 SRS508575
+SRR1039517 GSM1275871  N080611    trt      untrt SRR1039517       126  SRX384354 SRS508576</code></pre>
+</div>
+</div>
+<ul>
+<li class="fragment">Fragment length, treatment, cell line</li>
+<li class="fragment">Sequencing, experiment &amp; sample IDs</li>
+</ul>
+</section>
+<section id="common-data-structures-3" class="slide level2 slide-only unlisted">
+<h2>Common Data Structures</h2>
+<p>Gene information might look like</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 10 rows and 6 columns
+                  gene_name   gene_biotype gene_seq_start gene_seq_end    seq_name seq_strand
+                &lt;character&gt;    &lt;character&gt;      &lt;integer&gt;    &lt;integer&gt; &lt;character&gt;  &lt;integer&gt;
+ENSG00000000003      TSPAN6 protein_coding       99883667     99894988           X         -1
+ENSG00000000005        TNMD protein_coding       99839799     99854882           X          1
+ENSG00000000419        DPM1 protein_coding       49551404     49575092          20         -1
+ENSG00000000457       SCYL3 protein_coding      169818772    169863408           1         -1
+ENSG00000000460    C1orf112 protein_coding      169631245    169823221           1          1
+ENSG00000000938         FGR protein_coding       27938575     27961788           1         -1
+ENSG00000000971         CFH protein_coding      196621008    196716634           1          1
+ENSG00000001036       FUCA2 protein_coding      143815948    143832827           6         -1
+ENSG00000001084        GCLC protein_coding       53362139     53481768           6         -1
+ENSG00000001167        NFYA protein_coding       41040684     41067715           6          1</code></pre>
+</div>
+</div>
+</section>
+<section id="common-data-structures-4" class="slide level2 slide-only unlisted">
+<h2>Common Data Structures</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><img data-src="assets/se.png"></p>
+</div><div class="column" style="width:45%;">
+<ul>
+<li>The <code>SummarizedExperiment</code> class <span class="citation" data-cites="Morgan2026">(<a href="#/section" role="doc-biblioref" onclick="">Morgan et al. 2026</a>)</span></li>
+<li>Samples are the columns <span class="math inline">\(\implies\)</span> <code>colData</code></li>
+<li>Genes are the rows <span class="math inline">\(\implies\)</span> <code>rowData</code></li>
+<li>Optional <code>metadata</code></li>
+<li>Everything in one object</li>
+</ul>
+</div></div>
+</section>
+<section id="common-data-structures-5" class="slide level2 slide-only unlisted">
+<h2>Common Data Structures</h2>
+<ul>
+<li>The Digital Gene Expression List (<code>DGEList</code>) is similar</li>
+<li>Used by <code>edgeR</code> for RNA-Seq analysis <span class="citation" data-cites="Chen2025">(<a href="#/section" role="doc-biblioref" onclick="">Chen et al. 2025</a>)</span></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>SummarizedExperiment</code> objects can be extended
+<ul>
+<li><code>DESeq2</code> <span class="citation" data-cites="Love2014">(<a href="#/section" role="doc-biblioref" onclick="">Love et al. 2014</a>)</span>use a <code>DESeqDataSet</code></li>
+<li>Tree-based relationships</li>
+<li><code>SingleCellExperiment</code> etc</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="installing-bioconductor-packages" class="slide level2">
+<h2>Installing Bioconductor Packages</h2>
+<ul>
+<li>The package <code>BiocManager</code> installs from Bioconductor and CRAN
+<ul>
+<li>Hosted itself on CRAN <code>install.packages("BiocManager")</code></li>
+</ul></li>
+<li>Then use to install from either repository</li>
+</ul>
+<pre><code>library(BiocManager)
+install("DESeq2")</code></pre>
+</section>
+<section id="the-bioconductor-ecosystem" class="slide level2">
+<h2>The Bioconductor Ecosystem</h2>
+<ul>
+<li>Standardised core object structures used widely with ecosystem
+<ul>
+<li>Heavily relies on the <code>S4</code> class system</li>
+</ul></li>
+<li>Strongly interdependent packages</li>
+<li>Bioconductor Core Team ensure stable build testing, new submissions etc</li>
+<li>Strong focus on community support for users &amp; developers
+<ul>
+<li>Several key Bioc developers in Adelaide &amp; Australia</li>
+</ul></li>
+<li>Regional conferences, workshops, seminar series etc</li>
+</ul>
+</section>
 <section>
 <section id="references" class="title-slide slide level1 center">
 <h1>References</h1>
@@ -248,8 +376,22 @@ With <span class="citation" data-cites="helucro.bsky.social">(<a href="#/section
 <h2></h2>
 <!-- (no special size adjustment for HTML) -->
 <!-- This is where the bibliography gets injected -->
-<div id="refs" role="list">
-
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-chambers1977computational" class="csl-entry" role="listitem">
+Chambers, J. M. 1977. <em>Computational Methods for Data Analysis</em>. WILEY SERIES in PROBABILITY and STATISTICS: APPLIED PROBABILITY and STATIST ICS SECTION Series. Wiley. <a href="https://books.google.com.au/books?id=XlwVAQAAIAAJ">https://books.google.com.au/books?id=XlwVAQAAIAAJ</a>.
+</div>
+<div id="ref-Chen2025" class="csl-entry" role="listitem">
+Chen, Yunshun, Lizhong Chen, Aaron T L Lun, Pedro Baldoni, and Gordon K Smyth. 2025. <span>“<span class="nocase">edgeR</span> V4: Powerful Differential Analysis of Sequencing Data with Expanded Functionality and Improved Support for Small Counts and Larger Datasets.”</span> <em>Nucleic Acids Research</em> 53 (2): gkaf018. <a href="https://doi.org/10.1093/nar/gkaf018">https://doi.org/10.1093/nar/gkaf018</a>.
+</div>
+<div id="ref-Gentleman2004-sd" class="csl-entry" role="listitem">
+Gentleman, Robert C, Vincent J Carey, Douglas M Bates, et al. 2004. <span>“Bioconductor: Open Software Development for Computational Biology and Bioinformatics.”</span> <em>Genome Biol.</em> 5 (10): R80.
+</div>
+<div id="ref-Love2014" class="csl-entry" role="listitem">
+Love, Michael I., Wolfgang Huber, and Simon Anders. 2014. <span>“Moderated Estimation of Fold Change and Dispersion for RNA-Seq Data with DESeq2.”</span> <em>Genome Biology</em> 15: 550. <a href="https://doi.org/10.1186/s13059-014-0550-8">https://doi.org/10.1186/s13059-014-0550-8</a>.
+</div>
+<div id="ref-Morgan2026" class="csl-entry" role="listitem">
+Morgan, Martin, Valerie Obenchain, Jim Hester, and Hervé Pagès. 2026. <em>SummarizedExperiment: A Container (S4 Class) for Matrix-Like Assays</em>. <a href="https://doi.org/10.18129/B9.bioc.SummarizedExperiment">https://doi.org/10.18129/B9.bioc.SummarizedExperiment</a>.
+</div>
 </div>
 
 </section></section>
