@@ -1,0 +1,216 @@
+---
+title: "The Bioconductor Project"
+author: "Dr Stevie Pederson (They/Them) <br>stevie.pederson@thekids.org.au"
+email: "stevie.pederson@thekids.org.au"
+institute: "Black Ochre Data Labs, The Kids Research Institute Australia"
+bibliography: assets/references.bib
+format: 
+  revealjs:
+    theme: [assets/custom.scss]
+    output-file: bioconductor-slides.html
+    height: 720
+    width: 1280
+    sansfont: Times New Roman
+    slide-number: c
+    show-slide-number: all
+    include-after-body: assets/logos.html
+  html: 
+    css: [assets/custom.scss]
+    output-file: bioconductor.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2
+    include-in-header: assets/logos.html
+knitr: 
+  opts_chunk: 
+    set:
+      echo: false
+      message: false
+      warning: false
+      fig.align: 'left'
+---
+
+## [Acknowledgement Of Country]{.text-red}
+
+```{r opts_set, echo = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, message = FALSE, warning = FALSE
+)
+```
+
+
+::: {.text-red}
+
+I’d like to acknowledge the Kaurna people as the traditional owners and custodians of the land we know today as the Adelaide Plains, where I live & work.
+
+I also acknowledge the deep feelings of attachment and relationship of the Kaurna people to their place.
+
+I pay my respects to the cultural authority of Aboriginal and Torres Strait Islander peoples from other areas of Australia, and pay my respects to Elders past, present and emerging, and acknowledge any Aboriginal Australians who may be with us today
+
+:::
+
+## Who Developed R?
+
+- Developed at U Auckland by [Ross Ihaka](https://www.stat.auckland.ac.nz/~ihaka/) & [Robert Gentleman](https://hsph.harvard.edu/profile/robert-gentleman/)
+    + Rewrote the language `S` [@chambers1977computational]
+- v1.0.0 released in Feb 2000
+- Packages are hosted on the Comprehensive R Archive Network ([CRAN](https://cran.r-project.org))
+    + This is where `install.packages()` looks
+- CRAN packages are thoroughly tested across multiple platforms
+- Cover diverse fields (finance, ecology, psychology, data wrangling etc)
+- No formal versioning across packages
+
+## The Bioconductor Project
+
+:::: {.columns}
+::: {.column}
+
+- Robert Gentleman is a bioinformatician $\implies$ understood key needs of the field
+- Started developing the Bioconductor Project in 2001 [@Gentleman2004-sd]
+    + First official release v1.0 in May 2002 (R v1.5)
+
+:::
+::: {.column}
+
+
+
+![](assets/bioc_gb_2004.png)
+
+:::
+::::
+
+## The Bioconductor Project {.slide-only .unlisted}
+
+<blockquote class="bluesky-embed" data-bluesky-uri="at://did:plc:kxrymabcfc3rhmpvzmymmx5o/app.bsky.feed.post/3mqmbyi7mo22h" data-bluesky-cid="bafyreibau5qsmg4bahemzm2gpd3oy66ot5jpqpgv546n7bzedr7mv7jtcy" data-bluesky-embed-color-mode="system"><p lang="en">With @helucro.bsky.social, @mikelove.bsky.social and Robert Gentleman at the Ukrainian Biological Data Science Summer School<br><br><a href="https://bsky.app/profile/did:plc:kxrymabcfc3rhmpvzmymmx5o/post/3mqmbyi7mo22h?ref_src=embed">[image or embed]</a></p>&mdash; Wolfgang Huber (<a href="https://bsky.app/profile/did:plc:kxrymabcfc3rhmpvzmymmx5o?ref_src=embed">@wkhuber.bsky.social</a>) <a href="https://bsky.app/profile/did:plc:kxrymabcfc3rhmpvzmymmx5o/post/3mqmbyi7mo22h?ref_src=embed">July 14, 2026 at 10:44 PM</a></blockquote><script async src="https://embed.bsky.app/static/embed.js" charset="utf-8"></script>
+
+    
+## The Bioconductor Project {.slide-only .unlisted}
+    
+- Core data structures for genomic data as *core packages*
+    + Sequence information, genomic co-ordinates etc
+    + Specific file-types (bam files, bed files, gtf files)
+- Core structures heavily used between packages
+    + Strong dependency between packages
+- Bi-annual releases $\implies$ *all packages released synchronously*
+    + Install as an ecosystem of packages
+    + Tied to (and tested on) specific version of R
+    + Currently at Bioc release `r BiocManager::version()`
+
+
+## Common Data Structures
+
+For a microrray/RNA-Seq dataset we have three primary data objects
+
+1. Sample annotations and metadata
+2. Gene-Level information
+3. Expression measurements (counts, fluoresence etc)
+
+## Common Data Structures {.slide-only .unlisted}
+
+A matrix of gene-level counts
+
+```{r}
+options(width = 100)
+library(SummarizedExperiment)
+data(airway, package="airway")
+assay(airway, "counts")[1:10, 1:6]
+```
+
+::: {.incremental}
+- How do we store information about each sample?
+- And each gene?
+:::
+
+## Common Data Structures {.slide-only .unlisted}
+
+Sample information might look like
+
+```{r}
+colData(airway)[1:6, 1:8]
+```
+
+::: {.incremental}
+- Fragment length, treatment, cell line
+- Sequencing, experiment & sample IDs
+:::
+
+## Common Data Structures {.slide-only .unlisted}
+
+Gene information might look like
+
+```{r}
+rowData(airway)[1:10, c(2, 4:8)]
+```
+
+## Common Data Structures {.slide-only .unlisted}
+
+:::: {.columns}
+::: {.column width='55%'}
+
+![](assets/se.png)
+
+:::
+::: {.column width='45%'}
+- The `SummarizedExperiment` class [@Morgan2026]
+- Samples are the columns $\implies$ `colData`
+- Genes are the rows $\implies$ `rowData`
+- Optional `metadata`
+- Everything in one object
+
+:::
+::::
+
+## Common Data Structures {.slide-only .unlisted}
+
+- The Digital Gene Expression List (`DGEList`) is similar
+- Used by `edgeR` for RNA-Seq analysis [@Chen2025]
+
+::: {.fragment}
+- `SummarizedExperiment` objects can be extended
+    + `DESeq2` [@Love2014]use a `DESeqDataSet`
+    + Tree-based relationships
+    + `SingleCellExperiment` etc
+    
+:::
+
+## Installing Bioconductor Packages
+
+- The package `BiocManager` installs from Bioconductor and CRAN
+    + Hosted itself on CRAN `install.packages("BiocManager")`
+- Then use to install from either repository
+
+```
+library(BiocManager)
+install("DESeq2")
+```
+
+## The Bioconductor Ecosystem
+
+- Standardised core object structures used widely with ecosystem
+    + Heavily relies on the `S4` class system
+- Strongly interdependent packages
+- Bioconductor Core Team ensure stable build testing, new submissions etc
+- Strong focus on community support for users & developers
+    + Several key Bioc developers in Adelaide & Australia
+- Regional conferences, workshops, seminar series etc
+
+# References
+
+##
+
+::: {.content-visible when-format="beamer"}
+\begingroup
+\scriptsize
+:::
+
+::: {.content-visible when-format="revealjs"}
+<!-- (no special size adjustment for HTML) -->
+:::
+
+<!-- This is where the bibliography gets injected -->
+:::{#refs}
+:::
+
+::: {.content-visible when-format="beamer"}
+\endgroup
+:::
