@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 The practicals that you will be participating in will make use of cloud compute resources that are provided by The University as a [virtual machine](https://en.wikipedia.org/wiki/System_virtual_machine) (VM).
 The VM is basically a program that runs on a server but acts like a separate computer. You can log in to the VM and interact with the programs installed on it. The VMs provided each have 2 CPU cores, 16 GB of system memory, and 80 GB of hard disk space. They are yours to use for the semester, but you are also responsible for looking after them. The University hosts these VMs on AWS RONIN (Amazon Web Services) and pays by the minute for CPU time and storage. As a result, we have added an auto shutdown feature for VMs that stay idle for too long (idle means no jobs running or no user input).
 
-**Please [go here](../AWS_RONIN_connection) for instructions on connecting to your VM.**
+**Please [go here](https://learn.adelaide.edu.au/courses/32525/pages/practical-introduction-to-vms-2?module_item_id=1307994) for instructions on connecting to your VM.**
 
 
 
